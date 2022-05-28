@@ -3,6 +3,8 @@
 #include "dxApplication.h"
 #include "mesh.h"
 
+#include <queue>
+
 #include <SimpleMath.h>
 
 using namespace DirectX::SimpleMath;
@@ -21,6 +23,7 @@ namespace mini::gk2
 		void Update(const Clock& c) override;
 		void Render() override;
 
+		void SetDuckShaders();
 		void SetPhongShaders();
 		void SetCubeMapShaders();
 
@@ -28,14 +31,20 @@ namespace mini::gk2
 
 		void DrawMesh(const Mesh& m, Matrix worldMtx);
 
+		void UpdateDuckPos();
+
 		void UpdateCameraCB(Matrix viewMtx);
 		void UpdateCameraCB() { UpdateCameraCB(m_camera.getViewMatrix()); }
 
-		dx_ptr<ID3D11VertexShader> m_phongVS, m_envVS;
-		dx_ptr<ID3D11PixelShader> m_phongPS, m_envPS;
+		float m_time;
+		const float DUCK_PERIOD = 10.0f;
+		std::queue<Vector2> m_duckCurveControlPoints;
 
-		dx_ptr<ID3D11InputLayout> m_positionNormallayout;
-		dx_ptr<ID3D11InputLayout> m_positionNormalTexlayout;
+		dx_ptr<ID3D11VertexShader> m_phongVS, m_envVS, m_duckVS;
+		dx_ptr<ID3D11PixelShader> m_phongPS, m_envPS, m_duckPS;
+
+		dx_ptr<ID3D11InputLayout> m_positionNormalLayout;
+		dx_ptr<ID3D11InputLayout> m_positionNormalTexLayout;
 
 		dx_ptr<ID3D11SamplerState> m_samplerWrap;
 
@@ -47,6 +56,7 @@ namespace mini::gk2
 		Matrix m_duckMtx;
 
 		dx_ptr<ID3D11ShaderResourceView> m_cubeMap;
+		dx_ptr<ID3D11ShaderResourceView> m_duckTexture;
 
 		dx_ptr<ID3D11Buffer> m_cbWorldMtx, //vertex shader constant buffer slot 0
 			m_cbProjMtx;				   //vertex shader constant buffer slot 2 & geometry shader constant buffer slot 0

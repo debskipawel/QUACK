@@ -439,12 +439,12 @@ Mesh mini::Mesh::LoadDuckMesh(const DxDevice& device, const std::wstring& meshPa
 	int vn, in;
 	input >> vn;
 
-	vector<VertexPositionNormal> verts(vn);
-	XMFLOAT2 ignoreTextureCoords;
+	vector<VertexPositionNormalTex> verts(vn);
+
 	for (auto i = 0; i < vn; ++i)
 		input >> verts[i].position.x >> verts[i].position.y >> verts[i].position.z
 		>> verts[i].normal.x >> verts[i].normal.y >> verts[i].normal.z
-		>> ignoreTextureCoords.x >> ignoreTextureCoords.y;
+		>> verts[i].tex.x >> verts[i].tex.y;
 
 	input >> in;
 

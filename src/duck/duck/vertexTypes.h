@@ -33,6 +33,6 @@ namespace mini
 		DirectX::XMFLOAT3 normal;
 		DirectX::XMFLOAT2 tex;
 
-		static const D3D11_INPUT_ELEMENT_DESC Layout[2];
+		static const D3D11_INPUT_ELEMENT_DESC Layout[3];
 	};
 }
