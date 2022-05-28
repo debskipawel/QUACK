@@ -1,10 +1,9 @@
 ﻿#include "exceptions.h"
-#include "cbVariable.h"
-#include "shaderDemo.h"
+#include "duckDemo.h"
 
 using namespace std;
 using namespace mini;
-using namespace DirectX;
+using namespace gk2;
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPWSTR cmdLine, int cmdShow)
 {
@@ -14,8 +13,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPWSTR cmdLine,
 	CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
 	try
 	{
-		gk2::ShaderDemo app(hInstance);
-
+		DuckDemo app(hInstance);
 		exitCode = app.Run();
 	}
 	catch (Exception& e)
