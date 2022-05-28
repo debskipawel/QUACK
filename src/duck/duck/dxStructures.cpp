@@ -131,19 +131,19 @@ RasterizerDescription::RasterizerDescription()
 
 mini::SamplerDescription::SamplerDescription()
 {
-	Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-	AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-	AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	Filter = D3D11_FILTER_ANISOTROPIC;
+	AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 	MinLOD = -D3D11_FLOAT32_MAX;
 	MaxLOD = D3D11_FLOAT32_MAX;
 	MipLODBias = 0.0f;
-	MaxAnisotropy = 1;
+	MaxAnisotropy = 16;
 	ComparisonFunc = D3D11_COMPARISON_NEVER;
-	BorderColor[0] = 1.0f;
-	BorderColor[1] = 1.0f;
-	BorderColor[2] = 1.0f;
-	BorderColor[3] = 1.0f;
+	BorderColor[0] = 0.0f;
+	BorderColor[1] = 0.0f;
+	BorderColor[2] = 0.0f;
+	BorderColor[3] = 0.0f;
 }
 
 mini::ShaderResourceViewDescription::ShaderResourceViewDescription()

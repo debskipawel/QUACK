@@ -12,6 +12,7 @@ namespace mini
 	public:
 		explicit DxDevice(const Window& window);
 
+		const dx_ptr<ID3D11Device>& get() const { return m_device; }
 		const dx_ptr<ID3D11DeviceContext>& context() const { return m_context; }
 		const dx_ptr<IDXGISwapChain>& swapChain() const { return m_swapChain; }
 		ID3D11Device* operator->() const { return m_device.get(); }
