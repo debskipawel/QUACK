@@ -26,26 +26,35 @@ namespace mini::gk2
 		void SetDuckShaders();
 		void SetPhongShaders();
 		void SetCubeMapShaders();
+		void SetWaterShaders();
 
 		void SetShaders(const dx_ptr<ID3D11VertexShader>& vs, const dx_ptr<ID3D11PixelShader>& ps);
 
 		void DrawMesh(const Mesh& m, Matrix worldMtx);
 
+		void UpdateRaindrops();
 		void UpdateDuckPos();
+		void UpdateWaterNormals();
 
 		void UpdateCameraCB(Matrix viewMtx);
 		void UpdateCameraCB() { UpdateCameraCB(m_camera.getViewMatrix()); }
+
+		std::vector<float> m_heights;
+		std::vector<float> m_prevHeights;
+		std::vector<float> m_absorption;
+		std::vector<int> m_range;
 
 		float m_time;
 		const float DUCK_PERIOD = 10.0f;
 		std::queue<Vector2> m_duckCurveControlPoints;
 
-		dx_ptr<ID3D11VertexShader> m_phongVS, m_envVS, m_duckVS;
-		dx_ptr<ID3D11PixelShader> m_phongPS, m_envPS, m_duckPS;
+		dx_ptr<ID3D11VertexShader> m_phongVS, m_envVS, m_duckVS, m_waterVS;
+		dx_ptr<ID3D11PixelShader> m_phongPS, m_envPS, m_duckPS, m_waterPS;
 
 		dx_ptr<ID3D11InputLayout> m_positionNormalLayout;
 		dx_ptr<ID3D11InputLayout> m_positionNormalTexLayout;
 
+		dx_ptr<ID3D11RasterizerState> m_noCullRastState;
 		dx_ptr<ID3D11SamplerState> m_samplerWrap;
 
 		Mesh m_duck;
@@ -57,6 +66,9 @@ namespace mini::gk2
 
 		dx_ptr<ID3D11ShaderResourceView> m_cubeMap;
 		dx_ptr<ID3D11ShaderResourceView> m_duckTexture;
+
+		dx_ptr<ID3D11Texture2D> m_waterNormalTexture;
+		dx_ptr<ID3D11ShaderResourceView> m_waterNormalSrv;
 
 		dx_ptr<ID3D11Buffer> m_cbWorldMtx, //vertex shader constant buffer slot 0
 			m_cbProjMtx;				   //vertex shader constant buffer slot 2 & geometry shader constant buffer slot 0
