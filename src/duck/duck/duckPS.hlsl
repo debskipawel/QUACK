@@ -59,11 +59,20 @@ float4 main(PSInput i) : SV_TARGET
         
         color += multiplier * lightColor * surfaceColor.xyz * kd * saturate(dot(normal, lightVec)); //diffuse color
         
-        float nh = dot(normal, halfVec);
-        nh = saturate(nh);
-        nh = pow(nh, m);
-        nh *= ks;
-        color += multiplier * lightColor * nh; // specular
+        float3 tangent = normalize(cross(normal, float3(0.0, 1.0, 0.0)));
+        
+        if (1 - abs(dot(normal, float3(0.0, 1.0, 0.0))) < 0.01)
+        {
+            tangent = float3(1.0, 0.0, 0.0);
+        }
+        
+        float th = dot(tangent, halfVec);
+        
+        th = sqrt(1 - th * th);
+        th = saturate(th);
+        th = pow(th, m);
+        th *= ks;
+        color += lightColor * th; // specular
     }
     
     return float4(saturate(color), surfaceColor.a);
