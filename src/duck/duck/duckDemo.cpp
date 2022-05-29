@@ -22,13 +22,14 @@ namespace mini::gk2
 		m_cbProjMtx(m_device.CreateConstantBuffer<Matrix>()),
 		m_cbViewMtx(m_device.CreateConstantBuffer<Matrix, 2>()),
 		m_cbSurfaceColor(m_device.CreateConstantBuffer<Vector4>()),
-		m_cbLightPos(m_device.CreateConstantBuffer<Vector4, 2>()),
+		m_cbLightPos(m_device.CreateConstantBuffer<Vector4>()),
 		m_time(0.0f),
 		m_heights(WATER_MESH_SIZE* WATER_MESH_SIZE),
 		m_prevHeights(WATER_MESH_SIZE* WATER_MESH_SIZE),
 		m_absorption(WATER_MESH_SIZE* WATER_MESH_SIZE),
 		m_range(WATER_MESH_SIZE * WATER_MESH_SIZE),
-		m_duckTexture(m_device.CreateShaderResourceView(L"../resources/textures/ducktex.png"))
+		m_duckTexture(m_device.CreateShaderResourceView(L"../resources/textures/ducktex.png")),
+		m_grayNoise(m_device.CreateShaderResourceView(L"../resources/textures/gray_noise.jpg"))
 	{
 		for (int i = 0; i < WATER_MESH_SIZE * WATER_MESH_SIZE; i++)
 		{
@@ -99,6 +100,8 @@ namespace mini::gk2
 		
 		m_waterNormalTexture = m_device.CreateTexture(texDesc);
 		m_waterNormalSrv = m_device.CreateShaderResourceView(m_waterNormalTexture);
+
+		UpdateBuffer(m_cbLightPos, Vector4{ 0.0f, 3.0f, 0.0f, 1.0f });
 	}
 
 	void DuckDemo::Update(const Clock& c)
@@ -122,7 +125,7 @@ namespace mini::gk2
 		UpdateCameraCB();
 
 		SetWaterShaders();
-		DrawMesh(m_waterPlane, Matrix::Identity);
+		DrawMesh(m_waterPlane, Matrix::CreateTranslation(0.0f, m_waterLevel, 0.0f));
 
 		SetDuckShaders();
 		DrawMesh(m_duck, m_duckMtx);
@@ -144,9 +147,9 @@ namespace mini::gk2
 		ID3D11Buffer* psb[] = { m_cbLightPos.get() };
 		m_device.context()->PSSetConstantBuffers(0, 1, psb);
 
-		ID3D11ShaderResourceView* views[] = { m_duckTexture.get() };
+		ID3D11ShaderResourceView* views[] = { m_duckTexture.get(), m_grayNoise.get() };
 		ID3D11SamplerState* samplers[] = { m_samplerWrap.get() };
-		m_device.context()->PSSetShaderResources(0, 1, views);
+		m_device.context()->PSSetShaderResources(0, 2, views);
 		m_device.context()->PSSetSamplers(0, 1, samplers);
 
 		SetShaders(m_duckVS, m_duckPS);
@@ -318,7 +321,7 @@ namespace mini::gk2
 
 		tangent.Normalize();
 
-		Vector3 pos = { position.x, 0.0f, position.y };
+		Vector3 pos = { position.x, m_waterLevel, position.y };
 
 		float angle = atan2f(tangent.x, tangent.y);
 

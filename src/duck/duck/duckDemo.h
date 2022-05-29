@@ -39,6 +39,8 @@ namespace mini::gk2
 		void UpdateCameraCB(Matrix viewMtx);
 		void UpdateCameraCB() { UpdateCameraCB(m_camera.getViewMatrix()); }
 
+		float m_waterLevel = -0.5f;
+
 		std::vector<float> m_heights;
 		std::vector<float> m_prevHeights;
 		std::vector<float> m_absorption;
@@ -66,6 +68,7 @@ namespace mini::gk2
 
 		dx_ptr<ID3D11ShaderResourceView> m_cubeMap;
 		dx_ptr<ID3D11ShaderResourceView> m_duckTexture;
+		dx_ptr<ID3D11ShaderResourceView> m_grayNoise;
 
 		dx_ptr<ID3D11Texture2D> m_waterNormalTexture;
 		dx_ptr<ID3D11ShaderResourceView> m_waterNormalSrv;
