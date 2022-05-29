@@ -40,7 +40,9 @@ float4 main(PSInput i) : SV_TARGET
     float3 worldNorm = float3(0.0f, 1.0f, 0.0f);
 
     float2 tex = (i.localPos.xz + 1.0) / 2.0;
-    float3 norm = normalize(normalMap.Sample(samp, tex));
+    float3 norm = normalMap.Sample(samp, tex);
+    norm.x = norm.x * 2.0 - 1.0;
+    norm.z = norm.z * 2.0 - 1.0;
 
     float refractIndex = 0.75;
 

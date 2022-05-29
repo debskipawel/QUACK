@@ -45,7 +45,7 @@ namespace mini::gk2
 		std::vector<int> m_range;
 
 		float m_time;
-		const float DUCK_PERIOD = 10.0f;
+		const float DUCK_PERIOD = 5.0f;
 		std::queue<Vector2> m_duckCurveControlPoints;
 
 		dx_ptr<ID3D11VertexShader> m_phongVS, m_envVS, m_duckVS, m_waterVS;
