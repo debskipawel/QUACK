@@ -14,6 +14,5 @@ ___
 
 ## Video
 
-<video width="auto" height="auto" controls>
-  <source src="./recordings/duck_mo9JHNcIyt.mp4" type="video/mp4">
-</video>
+https://user-images.githubusercontent.com/52053209/236255576-449c367d-d3eb-49f5-b042-b1b3e2ec378c.mp4
+
