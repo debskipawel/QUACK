@@ -57,9 +57,9 @@ vector<ParticleVertex> ParticleSystem::Update(float dt, DirectX::XMFLOAT4 camera
 
 XMFLOAT3 ParticleSystem::RandomVelocity()
 {
-	static const uniform_real_distribution<float> angleDist(0, XM_2PI);
-	static const uniform_real_distribution<float> magnitudeDist(0, tan(MAX_ANGLE));
-	static const uniform_real_distribution<float> velDist(MIN_VELOCITY, MAX_VELOCITY);
+	static uniform_real_distribution<float> angleDist(0, XM_2PI);
+	static uniform_real_distribution<float> magnitudeDist(0, tan(MAX_ANGLE));
+	static uniform_real_distribution<float> velDist(MIN_VELOCITY, MAX_VELOCITY);
 	float angle = angleDist(m_random);
 	float magnitude = magnitudeDist(m_random);
 	XMFLOAT3 v{ cos(angle)*magnitude, 1.0f, sin(angle)*magnitude };

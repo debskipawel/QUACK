@@ -78,7 +78,7 @@ namespace mini::gk2
 		m_waterPlane = Mesh::Rectangle(m_device, 20.0f);
 
 		ID3D11ShaderResourceView* cubeMap = nullptr;
-		auto hr = CreateDDSTextureFromFile(m_device.get().get(), m_device.context().get(), L"../resources/textures/linus_cubemap.dds", nullptr, &cubeMap);
+		auto hr = CreateDDSTextureFromFile(m_device.get().get(), m_device.context().get(), L"../resources/textures/las_cubemap.dds", nullptr, &cubeMap);
 
 		m_cubeMap = dx_ptr<ID3D11ShaderResourceView>(cubeMap);
 
